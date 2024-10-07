@@ -1,19 +1,14 @@
 package Tests;
-import com.aventstack.extentreports.ExtentReports;
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
 import base.BaseTest;
-import utilities.Listeners;
-
-
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class EntrataTests extends BaseTest {
-
 
 	@Test
 	public void testHomePageTitle() {
@@ -23,11 +18,10 @@ public class EntrataTests extends BaseTest {
 		Assert.assertTrue(pageTitle.contains("Entrata"), "Title does not contain 'Entrata'");
 		System.out.println("test case 1 passed.");
 		screenshot();
-
 	}
 
 	@Test
-	public void cookieaccept(){
+	public void cookieaccept() {
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		try {
 			WebElement acceptButton = driver.findElement(By.xpath("//*[@id=\"cookie-accept\"]"));
@@ -41,33 +35,48 @@ public class EntrataTests extends BaseTest {
 	}
 
 	@Test
-	public void testNavigationToProducts() {
+	public void testNavigationToPages() {
+		// Array of page names and their corresponding XPath
+		String[][] pages = {
+				{"Products", "//div[contains(text(),'Products')]"},
+				{"Solutions", "//div[contains(text(),'Solutions')]"},
+				{"Resources", "//div[contains(text(),'Resources')]"}
+		};
 
-		// Click on "Products" link in the header and verify navigation
-		try {
-			// Set implicit wait
-			driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		for (String[] page : pages) {
+			String pageName = page[0];
+			String pageXPath = page[1];
 
-			// Find and click the 'Products' link
-			WebElement productsLink = driver.findElement(By.xpath("//div[contains(text(),'Products')]"));
-			productsLink.click();
+			try {
+				// Set implicit wait
+				driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 
-			// Get the title of the products page
-			String productsPageTitle = driver.getTitle();
-			System.out.println("Navigated to: " + productsPageTitle);
+				// Find and click the link
+				WebElement link = driver.findElement(By.xpath(pageXPath));
+				link.click();
 
-			// Assert the title contains 'Products'
-			Assert.assertTrue(productsPageTitle.contains("Entrata"), "Failed to navigate to Products page");
-			System.out.println("test case 3 passed.");
-			screenshot();
-		} catch (NoSuchElementException e) {
-			System.out.println("The 'Products' link was not found.");
-		} catch (TimeoutException e) {
-			System.out.println("The operation timed out.");
-		} catch (Exception e) {
-			System.out.println("An unexpected error occurred: " + e.getMessage());
+				// Get the title of the navigated page
+				String pageTitle = driver.getTitle();
+				System.out.println("Navigated to: " + pageTitle);
+
+				// Assert the title contains the expected page name
+				Assert.assertTrue(pageTitle.contains("Entrata"), "Failed to navigate to " + pageName + " page");
+				System.out.println("Test case for " + pageName + " passed.");
+				screenshot(); // Capture a screenshot after navigation
+
+			} catch (NoSuchElementException e) {
+				System.out.println("The '" + pageName + "' link was not found.");
+			} catch (TimeoutException e) {
+				System.out.println("The operation timed out while navigating to " + pageName + " page.");
+			} catch (Exception e) {
+				System.out.println("An unexpected error occurred while navigating to " + pageName + ": " + e.getMessage());
+			}
+
+			// Navigate back to the homepage to reset state for the next iteration
+			driver.navigate().back();
 		}
 	}
+
 
 	@Test
 	public void testLoginButtonPresent() {
@@ -75,8 +84,37 @@ public class EntrataTests extends BaseTest {
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		WebElement loginButton = driver.findElement(By.xpath("//a[contains(text(),'Sign In')]"));
 		Assert.assertTrue(loginButton.isDisplayed(), "Sign In button is not displayed on the homepage");
-		System.out.println("test case 4 passed.");
+		System.out.println("test case 5 passed.");
 		screenshot();
 
 	}
+
+	@Test
+	public void checkAllBrokenLinks() {
+		// Check for broken links on the homepage
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		HttpURLConnection connection = null;
+		List<WebElement> links = driver.findElements(By.tagName("a"));
+		System.out.println("Total links on the page: " + links.size());
+
+		for (WebElement link : links) {
+			String url = link.getAttribute("href");
+			try {
+				URL actualUrl = new URL(url);
+				connection = (HttpURLConnection) actualUrl.openConnection();
+				connection.setRequestMethod("HEAD");
+				connection.connect();
+				int responseCode = connection.getResponseCode();
+				if (responseCode >= 400) {
+					System.out.println("Broken link found: " + url);
+				} else {
+					System.out.println("Valid link: " + url);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		}
+	}
 }
+

@@ -19,8 +19,6 @@ public class EntraDemo extends BaseTest {
         Assert.assertTrue(pageTitle.contains("Entrata"), "Title does not contain 'Entrata'");
         System.out.println("test case 1 passed.");
         screenshot();
-
-
     }
 
     @Test
@@ -33,7 +31,6 @@ public class EntraDemo extends BaseTest {
         } catch (NoSuchElementException e) {
             System.out.println("Cookie consent pop-up not found or already accepted.");
         }
-
     }
     @Test
     public void Demo() {
@@ -51,7 +48,6 @@ public class EntraDemo extends BaseTest {
                 // Get the current window handle
                 String originalWindow = driver.getWindowHandle();
                 System.out.println("Original window handle: " + originalWindow);
-
                 driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 
                 // Get all window handles
@@ -66,9 +62,7 @@ public class EntraDemo extends BaseTest {
                         break;
                     }
                 }
-
                 // Perform actions in the new tab
-                // Assert and fill out the form fields
                 fillOutForm();
 
                 // Close the new tab
@@ -87,7 +81,6 @@ public class EntraDemo extends BaseTest {
             System.out.println("An error occurred: " + e.getMessage());
         }
     }
-
     private void fillOutForm() {
         // Example method to fill out the form fields
         screenshot();
@@ -122,5 +115,4 @@ public class EntraDemo extends BaseTest {
         System.out.println("Test case 4 passed.");
         screenshot();
     }
-
 }
