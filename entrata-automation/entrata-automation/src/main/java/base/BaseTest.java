@@ -14,11 +14,18 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * BaseTest class that provides setup and teardown methods for WebDriver.
+ * It also includes a method to take screenshots.
+ */
 public class BaseTest {
     protected static WebDriver driver;
     public ExtentReports extent;
 
-
+    /**
+     * Sets up the WebDriver before any test class is executed.
+     * Initializes the WebDriver and navigates to the Entrata homepage.
+     */
     @BeforeClass
     public void setUp() {
 
@@ -37,7 +44,10 @@ public class BaseTest {
             System.out.println(e.getMessage());
         }
     }
-
+    /**
+     * Tears down the WebDriver after all test methods in the class have been executed.
+     * Quits the WebDriver and flushes the ExtentReports instance.
+     */
     @AfterClass
     public void tearDown() {
         if (driver != null) {
@@ -49,6 +59,10 @@ public class BaseTest {
 
     }
 
+    /**
+     * Takes a screenshot of the current browser window.
+     * The screenshot is saved with a unique filename based on the current timestamp.
+     */
     public void screenshot(){
         // Take a screenshot
         try {

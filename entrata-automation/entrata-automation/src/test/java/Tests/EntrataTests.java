@@ -7,9 +7,15 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
+/**
+ * EntrataTests class that contains test methods for various functionalities on the Entrata website.
+ */
 public class EntrataTests extends BaseTest {
 
+	/**
+	 * Test method to verify the homepage title.
+	 * Asserts that the title contains the word "Entrata".
+	 */
 	@Test
 	public void testHomePageTitle() {
 		// Verify the homepage title
@@ -19,7 +25,10 @@ public class EntrataTests extends BaseTest {
 		System.out.println("test case 1 passed.");
 		screenshot();
 	}
-
+	/**
+	 * Test method to accept the cookie consent pop-up.
+	 * Clicks the accept button if it is found.
+	 */
 	@Test
 	public void cookieaccept() {
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
@@ -33,7 +42,10 @@ public class EntrataTests extends BaseTest {
 		}
 
 	}
-
+	/**
+	 * Test method to navigate to various pages and verify their titles.
+	 * Iterates through an array of page names and their corresponding XPath.
+	 */
 	@Test
 	public void testNavigationToPages() {
 		// Array of page names and their corresponding XPath
@@ -77,6 +89,10 @@ public class EntrataTests extends BaseTest {
 		}
 	}
 
+	/**
+	 * Test method to check if the login button is present on the homepage.
+	 * Asserts that the login button is displayed.
+	 */
 
 	@Test
 	public void testLoginButtonPresent() {
@@ -88,7 +104,10 @@ public class EntrataTests extends BaseTest {
 		screenshot();
 
 	}
-
+	/**
+	 * Test method to check for broken links on the homepage.
+	 * Iterates through all links and verifies their HTTP response code.
+	 */
 	@Test
 	public void checkAllBrokenLinks() {
 		// Check for broken links on the homepage

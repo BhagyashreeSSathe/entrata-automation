@@ -9,7 +9,14 @@ import base.BaseTest;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * EntraDemo class that contains test methods for various functionalities on the Entrata website.
+ */
 public class EntraDemo extends BaseTest {
+    /**
+     * Test method to verify the homepage title.
+     * Asserts that the title contains the word "Entrata".
+     */
     @Test
     public void testHomePageTitle() {
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
@@ -20,7 +27,10 @@ public class EntraDemo extends BaseTest {
         System.out.println("test case 1 passed.");
         screenshot();
     }
-
+    /**
+     * Test method to accept the cookie consent pop-up.
+     * Clicks the accept button if it is found.
+     */
     @Test
     public void cookieaccept(){
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
@@ -32,6 +42,10 @@ public class EntraDemo extends BaseTest {
             System.out.println("Cookie consent pop-up not found or already accepted.");
         }
     }
+    /**
+     * Test method to click the "Schedule Your Demo" button and fill out the demo form.
+     * Switches to the new tab, fills out the form, and then switches back to the original window.
+     */
     @Test
     public void Demo() {
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
@@ -81,6 +95,10 @@ public class EntraDemo extends BaseTest {
             System.out.println("An error occurred: " + e.getMessage());
         }
     }
+    /**
+     * Helper method to fill out the demo form fields.
+     * Asserts that each field is available before entering data.
+     */
     private void fillOutForm() {
         // Example method to fill out the form fields
         screenshot();
