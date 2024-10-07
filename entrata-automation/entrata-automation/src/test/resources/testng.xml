@@ -1,0 +1,12 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="EntrataAutomationSuite">
+<!--    <listeners>-->
+<!--        <listener class-name="utilities.ExtentHtmlReporter" />-->
+<!--    </listeners>-->
+    <test name="EntrataTests">
+        <classes>
+            <class name="Tests.EntrataTests"/>
+            <class name="Tests.EntraDemo"/>
+        </classes>
+    </test>
+</suite>
