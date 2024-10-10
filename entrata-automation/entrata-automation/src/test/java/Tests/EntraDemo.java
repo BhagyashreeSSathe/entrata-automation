@@ -13,10 +13,8 @@ import java.util.concurrent.TimeUnit;
  * EntraDemo class that contains test methods for various functionalities on the Entrata website.
  */
 public class EntraDemo extends BaseTest {
-    /**
-     * Test method to verify the homepage title.
-     * Asserts that the title contains the word "Entrata".
-     */
+
+     //Test method to verify the homepage title*/
     @Test
     public void testHomePageTitle() {
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
